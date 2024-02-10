@@ -1,4 +1,6 @@
-modes_of_transport <- df[, c("Bus", "Train", "MRT", "ERide", "Taxi")]
+############### PASSENGER COUNTS BY MODE OF TRANSPORT ###############
+
+modes_of_transport <- df[, c("Bus", "Kereta", "MRT", "ERide", "Taksi")]
 total_rows <- nrow(modes_of_transport)
 
 # Calculate the frequency of 0's/non-passengers in each column
@@ -26,7 +28,7 @@ donut_chart <- ggplot(passenger_data, aes(x = '', y = Percentage, fill = Transpo
   coord_polar("y", start = 0) +
   theme_void() +
   theme(legend.position = "bottom") +
-  scale_fill_manual(values = c("Bus" = "lightblue", "Train" = "lightgreen", "MRT" = "lightpink1", "ERide" = "burlywood1", "Taxi" = "lightsalmon1")) +
+  scale_fill_manual(values = c("Bus" = "lightblue", "Kereta" = "lightgreen", "MRT" = "lightpink1", "ERide" = "burlywood1", "Taksi" = "lightsalmon1")) +
   ggtitle("Passenger Counts by Mode of Transport") +
   theme(plot.title = element_text(hjust=0.5))+
   theme(plot.title = element_text(vjust=-7))+

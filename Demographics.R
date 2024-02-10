@@ -17,8 +17,8 @@ df <- read_excel(file_path)
 df <- df[, !(names(df) == "Timestamp")]
 
 # Changing column names #
-colnames(df) <- c("Age","Gender","Profession","Bus","Train","MRT","ERide","Taxi","Harrassment",
-                  "Where","What","Feeling","Action","NothingWhy","HabitualImpact","Why","Time","Frequency",
+colnames(df) <- c("Age","Gender","Profession","Bus","Kereta","MRT","ERide","Taksi","Harassment",
+                  "Where","What","Feeling","Action","NothingWhy","Intensity","Why","Time","Frequency",
                   "GotHelp","How","Witness","HelpOthers","HelpHow","WhyNot","ReportKnowledge_Bus",
                   "ReportKnowledge_Train", "ReportKnowledge_MRT","ReportKnowledge_ERide",
                   "ReportKnowledge_Taxi","Causes","Concern","Domicile","Citizen")
@@ -73,14 +73,10 @@ legend("topright", inset = c(0, 0.05), legend = c("Male", "Female", "Other"),
 
 ######## Professions
 # Change profession labels
-df$Profession <- gsub("Siswa SMA", "SMA Student", df$Profession)
-df$Profession <- gsub("Mahasiswa Universitas", "University Student", df$Profession)
-df$Profession <- gsub("Karyawan di Sektor Swasta", "Private Sector Employee", df$Profession)
-df$Profession <- gsub("Karyawan di Sektor Pemerintah", "Public Sector Employee", df$Profession)
-df$Profession <- gsub("Pegawai di Organisasi Non-Pemerintah", "Non-Gov Org Employee", df$Profession)
-df$Profession <- gsub("Tidak Bekerja", "Unemployed", df$Profession)
-df$Profession <- gsub("Siswa SMK", "SMK Student", df$Profession)
-df$Profession <- gsub("Freelance", "Freelancer", df$Profession)
+df$Profession <- gsub("Karyawan di Sektor Swasta", "Karyawan Sektor Swasta", df$Profession)
+df$Profession <- gsub("Karyawan di Sektor Pemerintah", "Karyawan Sektor Pemerintah", df$Profession)
+df$Profession <- gsub("Pegawai di Organisasi Non-Pemerintah", "Pegawai Organisasi Non-Pemerintah", df$Profession)
+df$Profession <- gsub("Freelance", "Pekerja Lepas", df$Profession)
 
 # Generate frequency table for professions
 pc <- table(df$Profession)
