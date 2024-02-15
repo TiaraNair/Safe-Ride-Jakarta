@@ -98,4 +98,30 @@ par(xpd=TRUE)
 label <- paste(names(profession_counts), " (", percentages, "%)", sep = "")
 legend(1.3,0.6,legend = label,cex=0.7, fill = brewer.pal(length(profession_counts), "Set2"), title = "Profession")
 
-#### END
+########################## DOMICILE
+
+library(dplyr)
+library(ggplot2)
+library(RColorBrewer)
+library(stringr)
+
+# Assuming your data frame is named df
+df %>%
+  mutate(Domicile = tolower(Domicile)) %>%
+  mutate(Domicile = case_when(
+    Domicile %in% c("jakarta utara", "jakarta barat", "jakarta timur", 
+                    "jakarta selatan", "jakarta pusat") ~ Domicile,
+    TRUE ~ "Luar Jakarta"
+  )) %>%
+  ggplot(aes(x = Domicile, fill = Domicile)) +
+  geom_bar() +
+  geom_text(stat = 'count', aes(label = after_stat(count)), position = position_stack(vjust = 1.05), color = "black") +
+  scale_fill_manual(values = brewer.pal(6, "YlGnBu")) +
+  labs(title = "Distribution of Domicile",
+       x = NULL,
+       y = "Count",
+       fill = "Count") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, vjust = 1.5),
+        axis.text.x = element_text(angle = 0, vjust = 0.5, hjust = 0.5))
+
