@@ -191,7 +191,6 @@ print(reason_counts_df)
 total_count <- sum(reason_counts_df$Count)
 print(paste("Total Count:", total_count))
 
-
 # Define the counts for each response
 counts <- c(5, 8, 11, 14, 23)
 reasons <- c("Hal itu tidak lagi mengganggu saya",
@@ -225,3 +224,55 @@ ggplot(data, aes(x = Count, y = reorder(Reason, Count), fill = Reason, label = C
         axis.text.y = element_blank(),   # Remove the y axis text
         legend.position = "right",      # Move the legend to the right
         legend.direction = "vertical")  # Make the legend vertical
+
+############################# TIME OF OCCURENCE ################################
+
+# Filter rows where Harassment is 'Yes'
+harassment_df <- df[df$Harassment == "Yes", ]
+
+# Filter rows in the "Action" column containing the relevant times
+time_df <- df[grepl("Pagi|Siang|Sore|Malam", df$Time), ]
+
+# Count the occurrences of each response
+time_counts <- table(time_df$Time)
+
+# Convert the act counts to a data frame
+time_counts_df <- as.data.frame(time_counts)
+colnames(time_counts_df) <- c("Time", "Count")
+
+# Sort the times by count in descending order
+time_counts_df <- time_counts_df[order(-time_counts_df$Count), ]
+
+# Print the unique counts
+print(time_counts_df)
+
+# Define the counts for each act
+counts <- c(52, 94, 172, 101)  # Insert the counts for each act here
+times <- c("Pagi", "Siang", "Sore", "Malam")
+
+# Create a dataframe
+data <- data.frame(Time = times, Count = counts)
+
+# Sort the data by count in descending order
+data <- data[order(-data$Count), ]
+
+# Reorder the levels of the Act factor variable based on the sorted data
+data$Time <- factor(data$Time, levels = data$Time)
+
+library(ggplot2)
+# Create a bar plot with descending bars and counts displayed on them for the provided data
+ggplot(data, aes(x = Count, y = reorder(Time, Count), fill = Time, label = Count)) +
+  geom_bar(stat = "identity") +
+  geom_text(hjust = -0.4, size = 3, color = "black") +
+  scale_fill_manual(values = c("#FF8C94", "#FFC3A0", "#FFDE8A", "#A2D2FF")) +
+  labs(title = "Times When Harassment Occurred",
+       x = "Count",
+       y = "Time") +
+  theme_minimal() +
+  theme(axis.title.y = element_blank(),  # Remove the y axis title
+        axis.text.y = element_blank(),   # Remove the y axis text
+        legend.position = "right",      # Move the legend to the right
+        legend.direction = "vertical",  # Make the legend vertical
+        plot.title = element_text(hjust = 0.5, vjust = 1.5))
+
+
